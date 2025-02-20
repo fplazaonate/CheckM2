@@ -20,6 +20,18 @@ jobs:
               - compiler: g++-9
     steps:
       - uses: actions/checkout@v2
+
+
+      # Add Docker testing steps
+      - name: Build Docker image
+        run: docker build -t checkm2 .
+        
+      - name: Test Docker image
+        run: |
+          docker run --rm checkm2 checkm2 -h
+          docker run --rm checkm2 checkm2 --version
+          docker run --rm checkm2 checkm2 predict -h
+
       - uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: 'latest'
