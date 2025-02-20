@@ -28,15 +28,6 @@ from checkm2 import fileManager
 from checkm2 import predictQuality
 
 
-def generate_header():
-    header = "\t\t  ____ _               _    __  __ ____  \n " \
-             "\t\t / ___| |__   ___  ___| | _|  \/  |___ \ \n " \
-             "\t\t| |   | '_ \ / _ \/ __| |/ / |\/| | __) | \n " \
-             "\t\t| |___| | | |  __/ (__|   <| |  | |/ __/  \n " \
-             "\t\t \____|_| |_|\___|\___|_|\_\_|  |_|_____| \n "
-
-    return header
-
 
 if __name__ == '__main__':
 
@@ -128,11 +119,11 @@ if __name__ == '__main__':
     action.add_argument('--setdblocation', help="Point CheckM2 to the DIAMOND database location if already downloaded.")
     action.add_argument('--current',  action='store_true', help="Print where current database is installed.")
     download_parser.add_argument('--path', help='Custom path for downloading and installing database file.', default=DefaultValues.DEFAULT_DB_INSTALL_LOCATION)
+    download_parser.add_argument('--no_write_json_db',  help='Do NOT attempt to write database path to internal JSON file [useful if install directory is not writable]', action='store_true', default=False)
 
 
 
     if (len(sys.argv) == 1 or sys.argv[1] == '-h' or sys.argv[1] == '--help' or sys.argv[1] == 'help'):
-        print('{}'.format(generate_header()))
         print('                ...::: CheckM2 v' + __version__ + ' :::...''')
         print('\n  General usage:')
         print('    predict         -> %s' % predict_description)
@@ -278,9 +269,12 @@ if __name__ == '__main__':
     elif args.subparser_name == 'database':
 
         if args.setdblocation:
-            fileManager.DiamondDB().set_DB_location(args.setdblocation)
+            if not args.no_write_json_db:
+                fileManager.DiamondDB().set_DB_location(args.setdblocation)
+            else:
+                logging.error('Cannot set db location when no_write_json_db flag is set.')
         elif args.download:
-            fileManager.DiamondDB().download_database(args.path)
+            fileManager.DiamondDB().download_database(args.path, args.no_write_json_db)
         elif args.current:
             loc = fileManager.DiamondDB().get_DB_location()
             logging.info(str(loc))
