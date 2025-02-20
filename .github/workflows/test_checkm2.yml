@@ -24,7 +24,7 @@ jobs:
 
       # Add Docker testing steps
       - name: Build Docker image
-        run: docker build -t checkm2 .
+        run: docker build -t checkm2 -f docker/Dockerfile .
         
       - name: Test Docker image
         run: |
