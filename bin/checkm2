@@ -29,7 +29,7 @@ from checkm2 import predictQuality
 
 
 
-if __name__ == '__main__':
+def main():
 
     num_threads = 1
 
@@ -281,3 +281,7 @@ if __name__ == '__main__':
 
     else:
         raise Exception("Programming error")
+
+
+if __name__ == '__main__':
+    main()
