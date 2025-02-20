@@ -12,10 +12,15 @@ setup(
                 ('testrun', ['checkm2/testrun/TEST1.tst', 'checkm2/testrun/TEST2.tst', 'checkm2/testrun/TEST3.tst'])],
     include_package_data=True,
     url='https://github.com/chklovski/CheckM2',
-    license='',
-    install_requires=(),
+    license='GPL-3.0',
+    install_requires=[],
     author='Alex Chklovski',
     scripts=['bin/checkm2'],
+    entry_points={
+        'console_scripts': [
+            'checkm2=checkm2.bin.checkm2:main',
+        ],
+    },
     author_email='chklovski@gmail.com',
     description='CheckM2 - Predicting the quality of metagenome-recovered bins'
 )
