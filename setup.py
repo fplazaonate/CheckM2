@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 setup(
     name='CheckM2',
     version='1.1.0',
-    packages=find_packages() + ['bin'],  # Add bin directory to packages
+    packages=find_packages(),
+    scripts=['bin/checkm2'],  # This will install the bin/checkm2 script
     data_files=[('data', ['checkm2/data/feature_ordering.json', 'checkm2/data/kegg_path_category_mapping.json',
                           'checkm2/data/min_ref_rsdata_v1.npz', 'checkm2/data/module_definitions.json']),
                 ('models', ['checkm2/models/specific_model_COMP.keras', 'checkm2/models/cosine_table.pkl', 
@@ -17,7 +18,7 @@ setup(
     author='Alex Chklovski',
     entry_points={
         'console_scripts': [
-            'checkm2=bin.checkm2:main',
+            'checkm2=checkm2.main:main',
         ],
     },
     author_email='chklovski@gmail.com',
